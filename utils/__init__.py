@@ -1,1 +1,1 @@
-__all__ = ['map_gen']
+__all__ = ['robot', 'room_gen']
