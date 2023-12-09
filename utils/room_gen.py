@@ -1,56 +1,67 @@
-import random 
+import random
 from termcolor import colored
 
-
-class RoomGeneration(): 
+class RoomGeneration():
     """Class for generating dirty rooms for the virtual robot to clean."""
-    def __init__(self): 
-        self.width, self.height = 5, 5 #random.randint(3, 10), random.randint(3, 10)
-        self.x, self.y = random.randint(0, self.width - 1), random.randint(0, self.height - 1)
 
-        self.obstacles = ['#', '*'] #solid, trash
+    def __init__(self):
+        """Initialize the RoomGeneration object with default room dimensions and starting position."""
+        self.width, self.height = 10, 10
+        self.obstacles = ['#', '*']  # Solid, trash
 
+        self.x, self.y = 0, 0
+        self.cx, self.cy = random.randint(0, self.width - 1), random.randint(0, self.height - 1)
 
-    def startingPosition(self):  
+    def startingPosition(self):
+        """Get the starting position of the robot in the room."""
+
         return self.x, self.y
 
-    
-    def getRoom(self): 
-        """Returns a 2D list to represent the room"""
-        room = []
+    def chargingStationPosition(self):
+        """Get the position of the charging station in the room."""
+        return self.cx, self.cy
 
-        for _ in range(self.width): 
-            row = []
-            for _ in range(self.height): 
-                row += f'{random.choice(self.obstacles)}'
-            room.append(row)
+    def getRoom(self, obstacles):
+        """Returns a 2D list to represent the room with randomly placed obstacles."""
         
-        #define where the robot begins cleaning
+        # Set all elements to '*'
+        room = [['*' for _ in range(self.height)] for _ in range(self.width)]
+
+        # Place furniture (solid blocks) randomly in the room
+        for _ in range(obstacles):
+            x, y = random.randint(0, self.width - 1), random.randint(0, self.height - 1)
+            room[y][x] = '#'
+
+        # Set the starting position of the robot in the room
         x, y = self.startingPosition()
-        room[y][x] = colored('>', 'red', attrs=['blink'])
+        room[y][x] = colored('>', 'red', attrs=['blink']) # Robot = '>'
+
+        # Set the charging station position and color it purple
+        cx, cy = self.chargingStationPosition()
+        room[cy][cx] = 'C'
 
         return room
-    
+
+
 
 
 
 
 
             
+
+
+
+
+                
+
+
         
 
 
-
-
-            
-
-
-    
-
-
-    
-    
-    
+        
+        
+        
 
     
 
